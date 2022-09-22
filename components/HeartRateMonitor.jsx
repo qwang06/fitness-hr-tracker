@@ -1,4 +1,5 @@
 import { Button } from '@chakra-ui/react';
+import { useState } from 'react';
 
 const connect = async (props) => {
 	const device = await navigator.bluetooth.requestDevice({
@@ -21,12 +22,26 @@ const printHeartRate = (e) => {
 }
 
 export default function HeartRateMonitor() {
+	const [isConnected, setIsConnected] = useState(false);
+
 	const handleClick = (e) => {
-		connect({ onChange: printHeartRate }).catch(console.error);
+		connect({ onChange: printHeartRate }).catch(err => {
+			console.error(err);
+			setIsConnected(false);
+		});
+		setIsConnected(true);
 	};
-	return (
-		<div>
-			<Button onClick={handleClick}>Connect</Button>
-		</div>
-	);
+	if (!isConnected) {
+		return (
+			<>
+				<Button onClick={handleClick}>Connect HR Monitor</Button>
+			</>
+		);
+	} else {
+		return (
+			<>
+				<div>Chart</div>
+			</>
+		);
+	}
 }

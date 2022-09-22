@@ -1,26 +1,21 @@
-import {
-	ChakraProvider,
-	Box,
-	Link,
-	HStack
-} from '@chakra-ui/react';
-import NextLink from "next/link"
+import { ChakraProvider } from '@chakra-ui/react';
+import Nav from '../components/Nav';
+import { SessionProvider } from "next-auth/react";
 
-function App({ Component, pageProps }) {
+function App({ 
+	Component,
+	pageProps: {
+		session,
+		...pageProps 
+	}
+}) {
 	return (
-		<ChakraProvider>
-			<Box bg='#474973' w='100%' p={4} color='white'>
-				<HStack spacing='24px'>
-					<NextLink href='/' passHref>
-						<Link>My Fitness</Link>
-					</NextLink>
-					<NextLink href='/find-exercises' passHref>
-						<Link>Find Exercises</Link>
-					</NextLink>
-				</HStack>
-			</Box>
-			<Component {...pageProps} />
-		</ChakraProvider>
+		<SessionProvider session={session}>
+			<ChakraProvider>
+				<Nav />
+				<Component {...pageProps} />
+			</ChakraProvider>
+		</SessionProvider>
 	)
 }
 

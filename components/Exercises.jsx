@@ -148,7 +148,7 @@ export default function Exercises() {
 	}
 
 	return (
-		<div>
+		<>
 			<FormControl isInvalid={!!errorMessage}>
 				<FormLabel>Search for exercises</FormLabel>
 				<Stack direction='row' align='center' pb={3}>
@@ -176,6 +176,6 @@ export default function Exercises() {
 				})}
 			</Accordion>
 			<Button mt={5} onClick={handlePaginationClick}>Get more exercises</Button>
-		</div>
+		</>
 	);
 }
